@@ -35,6 +35,9 @@ Route::get('/user/{name}', [UserController::class, 'show']);
 // resources/views/pages/about.blade.php - without any controller
 // Also, assign the route name "about"
 // Put one code line here below
+Route::get('/about',function(){
+    return view('pages/about');
+})->name('about');
 
 Route::get('/about', function () {
     return view('pages/about');
@@ -51,6 +54,10 @@ Route::get('/log-in', function () {
 // Task 5: group the following route sentences below in Route::group()
 // Assign middleware "auth"
 // Put one Route Group code line here below
+Route::prefix('app')->middleware('auth')->group(function () {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::resource('/tasks', TaskController::class);
+});
 
 // Tasks inside that Authenticated group:
 
